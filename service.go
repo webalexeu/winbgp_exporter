@@ -26,10 +26,10 @@ func serviceCheck(service_name string) float64 {
 	}
 	switch statusCode.State {
 	case svc.Stopped:
-		fmt.Printf("%s stopped", err)
+		fmt.Printf("%s stopped", service_name)
 		return 0
 	case svc.Running:
-		fmt.Printf("%s running", err)
+		fmt.Printf("%s running", service_name)
 		return 1
 	}
 	return 0

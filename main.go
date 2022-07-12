@@ -11,30 +11,33 @@ import (
 
 var (
 	listenAddress = flag.String("web.listen-address", ":9888", "Address to listen on for web interface.")
-	metricPath    = flag.String("web.metrics-path", "/metrics", "Path under which to expose metrics.")
+	metricsPath   = flag.String("web.metrics-path", "/metrics", "Path under which to expose metrics.")
 )
 
 var (
 	winbgp_static = prometheus.NewGauge(prometheus.GaugeOpts{
-		Name: "winbgp_static",
-		Help: "Status of WinBGP service",
+		Name:        "winbgp_static",
+		Help:        "Status of WinBGP service",
+		ConstLabels: prometheus.Labels{"destination": "primary"},
 	})
 )
 
 func init() {
 	// Metrics have to be registered to be exposed:
-	prometheus.MustRegister(winbgp_static)
+	//prometheus.MustRegister(winbgp_static)
 
 	//Create a new instance of the collector and
 	//register it with the prometheus client.
-	prometheus.MustRegister(newFooCollector())
+	prometheus.MustRegister(newServiceCollector())
+	prometheus.MustRegister(newRouteCollector())
+	prometheus.MustRegister(newPeersCollector())
 }
 
 func main() {
-	wmi_query()
+	//wmi_query()
 	// Set value (Will be done only once on run)
-	winbgp_static.Set(serviceCheck("w32time"))
-	log.Fatal(serverMetrics(*listenAddress, *metricPath))
+	//winbgp_static.Set(serviceCheck("w32time"))
+	log.Fatal(serverMetrics(*listenAddress, *metricsPath))
 }
 
 func serverMetrics(listenAddress, metricsPath string) error {
