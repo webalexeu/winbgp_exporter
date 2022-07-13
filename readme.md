@@ -32,7 +32,7 @@ WinBGP service status: `1` for up. `0` for down.
 ### `winbgp_exporter_parse_failures`
 
 ```text
-# HELP winbgp_exporter_parse_failures number of errors while parsing output
+# HELP winbgp_exporter_parse_failures Number of errors while parsing output
 # TYPE winbgp_exporter_parse_failures counter
 winbgp_exporter_parse_failures 0
 ```

@@ -9,17 +9,19 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
+var ScrapperFailures int
+
 var (
 	listenAddress = flag.String("web.listen-address", ":9888", "Address to listen on for web interface.")
 	metricsPath   = flag.String("web.metrics-path", "/metrics", "Path under which to expose metrics.")
 )
 
 var (
-	winbgp_static = prometheus.NewGauge(prometheus.GaugeOpts{
-		Name:        "winbgp_static",
-		Help:        "Status of WinBGP service",
-		ConstLabels: prometheus.Labels{"destination": "primary"},
-	})
+//winbgp_static = prometheus.NewGauge(prometheus.GaugeOpts{
+//	Name:        "winbgp_static",
+//	Help:        "Status of WinBGP service",
+//	ConstLabels: prometheus.Labels{"destination": "primary"},
+//})
 )
 
 func init() {
@@ -29,8 +31,9 @@ func init() {
 	//Create a new instance of the collector and
 	//register it with the prometheus client.
 	prometheus.MustRegister(newServiceCollector())
-	prometheus.MustRegister(newRouteCollector())
+	prometheus.MustRegister(newRoutesCollector())
 	prometheus.MustRegister(newPeersCollector())
+	prometheus.MustRegister(newScrapperCollector())
 }
 
 func main() {

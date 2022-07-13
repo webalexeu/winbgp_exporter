@@ -4,13 +4,13 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-type routeCollector struct {
-	routeDesc *prometheus.Desc
+type routesCollector struct {
+	routesDesc *prometheus.Desc
 }
 
-func newRouteCollector() *routeCollector {
-	return &routeCollector{
-		routeDesc: prometheus.NewDesc("winbgp_state_route",
+func newRoutesCollector() *routesCollector {
+	return &routesCollector{
+		routesDesc: prometheus.NewDesc("winbgp_state_route",
 			"WinBGP routes status",
 			[]string{"name", "network", "family"},
 			nil,
@@ -19,8 +19,8 @@ func newRouteCollector() *routeCollector {
 }
 
 // Set description on collector
-func (collector *routeCollector) Describe(ch chan<- *prometheus.Desc) {
-	ch <- collector.routeDesc
+func (collector *routesCollector) Describe(ch chan<- *prometheus.Desc) {
+	ch <- collector.routesDesc
 }
 
 func routeStatusConverter(route_status string) float64 {
@@ -34,9 +34,9 @@ func routeStatusConverter(route_status string) float64 {
 }
 
 // Populate collector with metrics
-func (collector *routeCollector) Collect(ch chan<- prometheus.Metric) {
+func (collector *routesCollector) Collect(ch chan<- prometheus.Metric) {
 	routes := exec_routes()
 	for _, route := range routes {
-		ch <- prometheus.MustNewConstMetric(collector.routeDesc, prometheus.GaugeValue, routeStatusConverter(route.Status), route.Name, route.Network, "ipv4")
+		ch <- prometheus.MustNewConstMetric(collector.routesDesc, prometheus.GaugeValue, routeStatusConverter(route.Status), route.Name, route.Network, "ipv4")
 	}
 }

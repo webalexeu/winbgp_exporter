@@ -33,6 +33,11 @@ func exec_routes() []Route {
 		fmt.Println(err)
 	}
 
+	// Increment scrapper failures counter
+	if (err != nil) || (ctx.Err() == context.DeadlineExceeded) {
+		ScrapperFailures++
+	}
+
 	var routes []Route
 	json.Unmarshal([]byte(out), &routes)
 	fmt.Printf("Routes : %+v", routes)
@@ -65,6 +70,11 @@ func exec_peers() []Peers {
 
 	if err != nil {
 		fmt.Println(err)
+	}
+
+	// Increment scrapper failures counter
+	if (err != nil) || (ctx.Err() == context.DeadlineExceeded) {
+		ScrapperFailures++
 	}
 
 	var peers []Peers

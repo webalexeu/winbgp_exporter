@@ -24,5 +24,5 @@ func (collector *serviceCollector) Describe(ch chan<- *prometheus.Desc) {
 
 // Populate collector with metrics
 func (collector *serviceCollector) Collect(ch chan<- prometheus.Metric) {
-	ch <- prometheus.MustNewConstMetric(collector.serviceDesc, prometheus.GaugeValue, serviceCheck("w32time"))
+	ch <- prometheus.MustNewConstMetric(collector.serviceDesc, prometheus.GaugeValue, serviceCheck("winbgp"))
 }
