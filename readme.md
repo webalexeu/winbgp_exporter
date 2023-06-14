@@ -37,7 +37,7 @@ WinBGP service status: `1` for up. `0` for down.
 winbgp_exporter_parse_failures 0
 ```
 
-Exporter parsing failures
+Exporter parsing failures: Number of parsing failures.
 
 ### `winbgp_state_peer`
 
@@ -54,7 +54,7 @@ BGP peers connectivity status: `1` for up. `0` for down, `2` for maintenance.
 ```text
 # HELP winbgp_state_route WinBGP routes status
 # TYPE winbgp_state_route gauge
-winbgp_state_route{family="ipv4",name="route1",network="192.168.88.0/29"} 0
+winbgp_state_route{family="ipv4",name="route1",network="192.168.88.0/29",state="down"} 0
 ```
 
-BGP route status:`0` for down, `1` for up, `2` for maintenance.
+BGP route state:up, down, maintenance

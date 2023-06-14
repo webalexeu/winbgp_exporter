@@ -12,7 +12,8 @@ func newServiceCollector() *serviceCollector {
 	return &serviceCollector{
 		serviceDesc: prometheus.NewDesc("winbgp_status",
 			"Status of WinBGP service",
-			nil, nil,
+			[]string{"state"},
+			nil,
 		),
 	}
 }
@@ -24,5 +25,5 @@ func (collector *serviceCollector) Describe(ch chan<- *prometheus.Desc) {
 
 // Populate collector with metrics
 func (collector *serviceCollector) Collect(ch chan<- prometheus.Metric) {
-	ch <- prometheus.MustNewConstMetric(collector.serviceDesc, prometheus.GaugeValue, serviceCheck("winbgp"))
+	ch <- prometheus.MustNewConstMetric(collector.serviceDesc, prometheus.GaugeValue, serviceCheck("winbgp"), "running")
 }

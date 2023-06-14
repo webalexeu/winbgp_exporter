@@ -17,11 +17,11 @@ var (
 )
 
 var (
-//winbgp_static = prometheus.NewGauge(prometheus.GaugeOpts{
-//	Name:        "winbgp_static",
-//	Help:        "Status of WinBGP service",
-//	ConstLabels: prometheus.Labels{"destination": "primary"},
-//})
+//	winbgp_static = prometheus.NewGauge(prometheus.GaugeOpts{
+//		Name:        "winbgp_static",
+//		Help:        "Status of WinBGP service",
+//		ConstLabels: prometheus.Labels{"destination": "primary"},
+//	})
 )
 
 func init() {
@@ -38,6 +38,7 @@ func init() {
 
 func main() {
 	//wmi_query()
+	//wmi_query2()
 	// Set value (Will be done only once on run)
 	//winbgp_static.Set(serviceCheck("w32time"))
 	log.Fatal(serverMetrics(*listenAddress, *metricsPath))

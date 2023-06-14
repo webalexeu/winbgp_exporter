@@ -48,6 +48,7 @@ func exec_routes() []Route {
 type Peers struct {
 	PeerName           string
 	LocalIPAddress     string
+	LocalASN           string
 	PeerIPAddress      string
 	PeerASN            string
 	ConnectivityStatus string
@@ -58,7 +59,7 @@ func exec_peers() []Peers {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel() // The cancel should be deferred so resources are cleaned up
 
-	cmd := exec.CommandContext(ctx, "powershell", "-nologo", "-noprofile", "Get-BgpPeer | Select-Object PeerName,LocalIPAddress,PeerIPAddress,PeerASN,@{Label='ConnectivityStatus';Expression={$_.ConnectivityStatus.ToString()}} | ConvertTo-Json")
+	cmd := exec.CommandContext(ctx, "powershell", "-nologo", "-noprofile", "Get-BgpPeer | Select-Object PeerName,LocalIPAddress,@{Label='LocalASN';Expression={$_.LocalASN.ToString()}},PeerIPAddress,@{Label='PeerASN';Expression={$_.PeerASN.ToString()}},@{Label='ConnectivityStatus';Expression={$_.ConnectivityStatus.ToString()}} | ConvertTo-Json")
 	out, err := cmd.CombinedOutput()
 
 	// We want to check the context error to see if the timeout was executed.
